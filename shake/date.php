@@ -117,9 +117,9 @@ function usemysql(){
          $sql1="SELECT * FROM  `weixin_shake_toshake` order by point desc";
         
         $query1=mysql_query($sql1,$link) or die(mysql_error());
-        
-        
-        
+
+
+    $arr_one = array();
         while($q=mysql_fetch_assoc($query1)){
         $q['phone']=pack('H*',$q['phone']);
         $q=emoji_unified_to_html(emoji_softbank_to_unified($q));
@@ -141,7 +141,7 @@ function usemysql(){
          }
         
          else if($judge == 2){
-        
+
         $num=count($arr_one);
         
          echo $num;

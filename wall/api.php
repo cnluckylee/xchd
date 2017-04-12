@@ -36,23 +36,30 @@ if ($maxid <= $num){
 }
 $q[5]=pack('H*',$q[5]);
 $q=emoji_unified_to_html(emoji_softbank_to_unified($q));
-$id=$q[0];
-$fakeid=$q[2];
-$num=$q[3];
-$content=$q[4];
-$content = biaoqing($content);
-$nickname=$q[5];
-$avatar=$q[6];
-$ret=$q[7];
-$image=$q[9];
-if($q[3]){
-@$msg=array(data=>array(array("id"=>$id,"fakeid"=>$fakeid,"num"=>$num,"content"=>$content,"nickname"=>$nickname,"avatar"=>$avatar,"image"=>$image)),ret=>1);
-echo $msg=json_encode($msg);
+if($q && count($q)>1)
+{
+    $id=$q[0];
+    $fakeid=$q[2];
+    $num=$q[3];
+    $content=$q[4];
+    $content = biaoqing($content);
+    $nickname=$q[5];
+    $avatar=$q[6];
+    $ret=$q[7];
+    $image=$q[9];
+    if($q[3]){
+        @$msg=array(data=>array(array("id"=>$id,"fakeid"=>$fakeid,"num"=>$num,"content"=>$content,"nickname"=>$nickname,"avatar"=>$avatar,"image"=>$image)),ret=>1);
+        echo $msg=json_encode($msg);
+
+    }else{
+
+            @$msg=array(data=>array(),ret=>0);
+            echo $msg=json_encode($msg);
+
+    }
+
 }
-if(!$q[3]){
-@$msg=array(data=>array(),ret=>0);
-echo $msg=json_encode($msg);
-}
+
 
 
 ?>

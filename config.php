@@ -1,16 +1,16 @@
 <?php
 @header("Content-type: text/html; charset=utf-8");
- 
-define("TOKEN", "xiaobai"); //配置API
-define("Web_ROOT",'http://localhost'); //你的域名地址，最后不要带/
+
+defined("TOKEN") or define("TOKEN", "xiaobai"); //配置API
+defined("Web_ROOT") or define("Web_ROOT",'http://localhost'); //你的域名地址，最后不要带/
 $weixin_name='狗扑分享微信互动大屏幕';//这里可以配置你的微信公众账号名字，你也可以改下面的源码
 $xiaobai_wxh = '狗扑分享';//微信帐号（wall前台显示）
 	/***采集微信公众平台密码配置***/
-define("USER", "admin@gope.cn");//公众平台账号 不能带空格
-define("PASS", "Gope.Cn");//公众平台密码  不能带空格
+defined("USER")  or define("USER", "admin@gope.cn");//公众平台账号 不能带空格
+defined("PASS") or define("PASS", "Gope.Cn");//公众平台密码  不能带空格
 $screenpaw = "admin";//进入微信大屏幕的密码
 
-define("UR", Web_ROOT);
+defined("UR") or define("UR", Web_ROOT);
 $url=Web_ROOT.'/moni/xiaobai.php';//不用修改、这个填写你的1.php这个文件的地址
 $weixin_wxq=Web_ROOT.'/wall/';//不用修改、这里填写你的互动大屏幕的地址
 /*链接数据库*/

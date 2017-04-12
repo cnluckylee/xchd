@@ -1,8 +1,9 @@
 <?php 
 @header("Content-type: text/html; charset=utf-8");
-
+defined("root_path") or define('root_path', dirname(dirname(__FILE__)));
+include_once (root_path."/config.php");
+include_once (root_path."/wall/dbs.php");
 session_start();
-
 if(isset($_SESSION['views']) && $_SESSION['views'] == true){
 
 
@@ -17,33 +18,38 @@ if(isset($_GET["style"])){
 }else{
     $style ="shangwu2";
 }
-if(file_exists("cj_plug/cj_html.php"))
- {
-$cj_plug=1;
-}else{
-$cj_plug=0;
-}
 
-if(file_exists("ddp_plug/ddp_html.php"))
+$sql = 'select * from weixin_wall_config';
+$sqlData = $db->getOne($sql);
+$cj_plug = $ddp_plug = $vote_plug = $qdq_plug = $shake = 0;
+
+if(file_exists("cj_plug/cj_html.php") && $sqlData['cjopen'] )
+ {
+    $cj_plug=1;
+ }else{
+    $cj_plug=0;
+ }
+
+if(file_exists("ddp_plug/ddp_html.php") && $sqlData['ddpopen'])
 {
 $ddp_plug=1;
 }else{
 $ddp_plug=0;
 }
 
-if(file_exists("vote_plug/vote_html.php")){
+if(file_exists("vote_plug/vote_html.php") && $sqlData['voteopen']){
 $vote_plug=1;
 }else{
 $vote_plug=0;
 }
 
- if(file_exists("qdq_plug/qdq_html.php")){
+ if(file_exists("qdq_plug/qdq_html.php") && $sqlData['qdopen']){
 $qdq_plug=1;
 }else{
 $qdq_plug=0;
 }
 
- if(file_exists("../shake/index.php")){
+ if(file_exists("../shake/index.php") && $sqlData['shakeopen']){
 $shake=1;
 }else{
 $shake=0;
@@ -143,7 +149,7 @@ if($qdq_plug)
  {
 echo '<a href="javascript:void(0);" class="tooltip btnCheckin  btn-icon btn-checkin" title="签到墙，快捷键Q，【空格】开始" id="btnCheckin">签到墙</a>';
 }
-echo '<a onClick="viewstyle();" class="tooltip btnSkinSel  btn-icon btn-style" title="更换风格，快捷键F">风格选择</a>';
+//echo '<a onClick="viewstyle();" class="tooltip btnSkinSel  btn-icon btn-style" title="更换风格，快捷键F">风格选择</a>';
 if($ddp_plug)
  {
 echo '<a href="javascript:void(0);" class="tooltip btnDdp     btn-icon btn-pair " title="对对碰，快捷键D，【空格】开始">对对碰</a>';

@@ -15,8 +15,9 @@
 		   cj_per= new Array(); 
 			$.getJSON('cj_plug/cj_data.php?action=ready',function(json){
 			if(json){
-				 $.each(json, function(i,v){
-					cj_per.push(new Array(v['id'],v['avatar'],v['nickname']));
+				 $.each(json.data, function(i,v){
+				 	console.log(v);
+				 	cj_per.push(new Array(v['id'],v['avatar'],v['nickname']));
 				});
 				   $(".lotteryUserNum").html(cj_per.length);
 					$(".winUserNum").text(cj_id);
@@ -27,6 +28,7 @@
 					cjstart_btn = $(".startLotteryBtn");
 					cjstart_btn.children("span").text("开始抽奖");
 				});
+
 		}
 	$(".btnLottery").click(function(){
 		
