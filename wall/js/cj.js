@@ -58,7 +58,7 @@
 					$(".lotteryName").html(v);
 					$("#cj_mid").val(cj_id);
 					$("#cj_mid").attr('name',num);
-				},1000);
+				},200);
 				cj_jadge = 0;
        			cjstart_btn.children("span").text("停止");
 				cjstart_btn.fadeIn(1000);
