@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="cj_plug/images/cjcss.css" type="text/css">
-<div class="fl-lottery lotteryLayer ui transition hidden" id="cj_layer">
+<div class="fl-lottery lotteryLayer ui transition " id="cj_layer">
   <div class="fl-inner fl-bg">
     <div class="inner-cont clearfix">
       <div class="prize-box">
@@ -61,4 +61,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="js/cj.js"></script>
+<script type="text/javascript" src="js/cj.js?v=2"></script>

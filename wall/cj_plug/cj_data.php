@@ -1,7 +1,9 @@
 <?php
-include_once('../../config.php'); //连接数据库 
+
+include_once('../../config.php'); //连接数据库
 include('../biaoqing.php');
 $action = $_GET['action'];
+$pid = isset($_GET['pid'])?$_GET['pid']:1374;
 include('../dbs.php');
 set_time_limit(100);
 if($action=="reset"){
@@ -10,25 +12,23 @@ if($action=="reset"){
 		if($queryy)
        	 echo '2'; 
 }else if($action=="ready"){
-    $pid = 1374;
-
-    $one = $db->fetOne('weixin_flag','*','PID='.$pid);
-
-    $data = array();
-    if(!$one)
-    {
+//    $one = $db->fetOne('weixin_flag','*','PID='.$pid);
+//    $data = array();
+//    if(!$one)
+//    {
         $file = file_get_contents("http://sh.loco-app.com:8000//pcshare/partyusers?pid=".$pid);
+
+
+
         $webp = strpos($_SERVER['HTTP_ACCEPT'], 'image/webp');
         $iswebp = $webp === false? 0 : 1;
         $pageArray = json_decode($file,true);
-        $pageArray['data'] = $pageArray['users'];
-        unset($pageArray['users']);
-        $sql = "delete from  weixin_flag where pid=$pid";
-        $query = mysql_query($sql);
-        foreach($pageArray['data'] as $k=>$v)
+//        $pageArray['data'] = $pageArray['users'];
+//        unset($pageArray['users']);
+//        $sql = "delete from  weixin_flag where pid=$pid";
+//        $query = mysql_query($sql);
+        foreach($pageArray['users'] as $k=>$v)
         {
-            $v['avatar'] = '/res/file.php?r='.urlencode($v['avatar'].'&frompc=1&type=s&webp='.$iswebp);
-            $data[] = $v;
             $v['PID'] = $pid;
             $v['cjstatu'] = 0;
             $v['shady'] = 0;
@@ -36,26 +36,33 @@ if($action=="reset"){
             $v['status'] = 2;
             $v['fakeid'] = 1;
             $v['nickname'] = addslashes($v['nickname']);
-            try{
-                $db->add('weixin_flag',$v);
-            }catch(Exception $e)
-            {
-                print_r($e);exit;
-            }
+//            try{
+//                $db->add('weixin_flag',$v);
+//            }catch(Exception $e)
+//            {
+//                print_r($e);exit;
+//            }
+            $data[$v['id']] = $v;
         }
-    }else{
-        $sql = "select * from weixin_flag where (status=2 or status=3) and fakeid>0 and PID=".$pid;
-        $sqlData = $db->getAll($sql);
-        foreach($sqlData as $k=>$row1)
-        {
-            $data[] = array(
-                'id' => $row1['id'],
-                'avatar' => $row1['avatar'],
-                'nickname' => $row1['nickname'],
-                'code' => $row1['code'],
-            );
-        }
-    }
+    $myfile = fopen("/tmp/partyuser_".$pid.".txt", "w") or die("Unable to open file!");
+    fwrite($myfile, json_encode($data));
+    fclose($myfile);
+
+    $pageArray['pid'] = $pid;
+
+//    }else{
+//        $sql = "select * from weixin_flag where (status=2 or status=3) and fakeid>0 and PID=".$pid;
+//        $sqlData = $db->getAll($sql);
+//        foreach($sqlData as $k=>$row1)
+//        {
+//            $data[] = array(
+//                'id' => $row1['id'],
+//                'avatar' => $row1['avatar'],
+//                'nickname' => $row1['nickname'],
+//                'code' => $row1['code'],
+//            );
+//        }
+//    }
     $pageArray['data'] = $data;
     echo json_encode($pageArray);exit;
 }else if($action=="ok"){ //标识中奖号码 
@@ -72,6 +79,32 @@ if($action=="reset"){
     if($query){ 
         echo '1'; 
     } 
-} 
+}else if($action == "reload")
+{
+    $file = file_get_contents("http://sh.loco-app.com:8000//pcshare/partyusers?pid=".$pid);
+    $pageArray = json_decode($file,true);
+    $pageArray['data'] = $pageArray['users'];
+    unset($pageArray['users']);
+    $sql = "delete from  weixin_flag where pid=$pid";
+    $query = mysql_query($sql);
+    foreach($pageArray['data'] as $k=>$v)
+    {
+//        $v['avatar'] = '/res/file.php?r='.urlencode($v['avatar'].'&frompc=1&type=s&webp='.$iswebp);
+        $data[] = $v;
+        $v['PID'] = $pid;
+        $v['cjstatu'] = 0;
+        $v['shady'] = 0;
+        $v['openid'] = '';
+        $v['status'] = 2;
+        $v['fakeid'] = 1;
+        $v['nickname'] = addslashes($v['nickname']);
+        try{
+            $db->add('weixin_flag',$v);
+        }catch(Exception $e)
+        {
+            print_r($e);exit;
+        }
+    }
+}
 
 ?>

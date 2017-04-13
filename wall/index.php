@@ -1,4 +1,8 @@
-<?php 
+<?php
+namespace xchd\wall;
+
+use xchd\libs\Tools;
+
 @header("Content-type: text/html; charset=utf-8");
 defined("root_path") or define('root_path', dirname(dirname(__FILE__)));
 include_once (root_path."/config.php");
@@ -83,12 +87,11 @@ if(document.all){
 
 if(file_exists("style/".$style."/change.php"))
  {
-include("style/".$style."/change.php");}
+    include("style/".$style."/change.php");}
 ?>
 <div class="main">
    <EMBED style=" z-index:-2;RIGHT: 250px; POSITION: absolute; TOP: 55px; absolute: " align=right src=".style/<?php echo $style?>/images/fl.swf" width=1600 height=625 type=application/x-shockwave-flash wmode="transparent" quality="high" ;></EMBED>
    <EMBED style="z-index:-2;LEFT: 250px; POSITION: absolute; TOP: 55px; absolute: " align=right src=".style/<?php echo $style?>/images/fl.swf" width=1600 height=625 type=application/x-shockwave-flash wmode="transparent" quality="high" ;></EMBED>
-
 <div class="l"></div>
 <div class="r"></div>
 <div class="top" onClick="viewExplan();" data-position="right center" data-content="二维码，快捷键M">
@@ -105,7 +108,6 @@ include("style/".$style."/change.php");}
 		}else{
 			echo '<div class="ui shape top-logo">';
 		}
-	
 	?>
 	<div class="sides">
 	<?php 
@@ -137,7 +139,7 @@ include("style/".$style."/change.php");}
         <div class="left">
      
         </div>
-      <div class="center">
+      <div class="center" style="display: none;">
             <div class="list">
                 <ul id="list"></ul>
             </div>
@@ -147,8 +149,8 @@ include("style/".$style."/change.php");}
 <?php 
 if($qdq_plug)
  {
-echo '<a href="javascript:void(0);" class="tooltip btnCheckin  btn-icon btn-checkin" title="签到墙，快捷键Q，【空格】开始" id="btnCheckin">签到墙</a>';
-}
+    echo '<a href="javascript:void(0);" class="tooltip btnCheckin  btn-icon btn-checkin" title="签到墙，快捷键Q，【空格】开始" id="btnCheckin">签到墙</a>';
+ }
 //echo '<a onClick="viewstyle();" class="tooltip btnSkinSel  btn-icon btn-style" title="更换风格，快捷键F">风格选择</a>';
 if($ddp_plug)
  {
@@ -219,7 +221,7 @@ echo "<i class=' bigbig volume off icon ' id='video-volume'></i>";}
 <?php 
 if($cj_plug)
  {
-include('cj_plug/cj_html.php');}
+    include('cj_plug/cj_html.php');}
 ?>
 <!--对对碰层-->
 <?php 
@@ -243,7 +245,7 @@ include('qdq_plug/qdq_html.php');}
 
 <div class="mone" id="mone" onClick="viewOneHide();"><div class="leftside"><div class="part"><div class="pic"><img class="msgconimg" src="" width="100" height="100"></div><div class="username" style="color:#fff"><span style="color:#fff"></span></div></div></div><div class="rightside"><div class="rightmain"><div class="rconner"></div><span class="msgcon"></span></div></div></div>
     
- <div id="explan" onClick="viewExplan();" class="ui primary segment" >
+ <div id="explan" onClick="viewExplan();" class="ui primary segment" style="display: none;">
     <div class="pic"><img src="images/ma.jpg" width=362px height=362px;/></div>
     <div class="ui ribbon green label"><b style="font-size:50px;">上墙方法：</b></div><p>添加微信公众号：<br />　　<a class="ui blue label"><b style="font-size:2.3em;line-height: 1.7em;"><?php  echo $xiaobai_wxh;?></b></a><br><b style="font-size:1.4em;line-height: 1.4em; margin-top:1em;">按照提示回复，编辑您想说的话,回复到公众号微信,即可参与上墙！</b></p>
 		<div class="ui bottom right attached label vote-right"><a class="ui black circular label" >×</a></div>
@@ -349,10 +351,11 @@ function messageAdd()
 		window.setTimeout('viewOneHide();', 3000);
 	}
     cur++;
-    messageData();
+//    messageData();
 }
 function messageData()
 {
+    return;
     var url='api.php';
     $.getJSON(url,{lastid:lastid},function(d) {
         //alert(d);return;
@@ -372,22 +375,18 @@ function messageData()
 window.onload=function()
 {
   mtime=setInterval(messageAdd,refreshtime*1000);
-  
-  }
+}
 </script>
     <!--<li>
         <div class="l"></div>
         <div class="r">
             <span></span>
-                    </div>
+         </div>
     </li>-->
     <script>
 
 setInterval("$('.shape').shape('flip up');",5000);
       //头部文字切换
-  
-
- 
 </script>
     <img class="bg" src="style/<?php echo $style?>/images/kuxuan.jpg"/>
 </body>

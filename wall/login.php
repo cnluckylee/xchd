@@ -1,18 +1,25 @@
-<?php 
-@$action = $_GET["action"];
-@$bakurl = $_GET["url"];
+<?php
+include_once "../libs/Tools.php";
+include_once "dbs.php";
+$tools = new \xchd\libs\Tools();
+
+$action = $tools::getParam("action");
+$bakurl = $tools::getParam("url");
 if(!$bakurl){
 	$bakurl = 'index.php';
-	}
+}
+
 require 'db.php';
 if($action == 'verify'){
-    if($screenpaw == $_POST['paw']){
-			session_start();
-	$_SESSION['views'] = true;
-		echo 1;
+    $user = $tools::getParam('paw','','post');
+    $sqlData = $db->fetOne('weixin_admin','*','user="'.$user.'"');
+    if($sqlData){
+        $tools::TSession('user',$sqlData);
+        $tools::TSession('views',1);
+		    echo 1;
 		}else{
 			echo 0;
-			}
+		}
 }else{
 
 ?>
@@ -48,7 +55,7 @@ $(function(){
 					}else{
 						$('#login-form').addClass("has-error");
 						$('#login-form').transition('shake');
-						}
+					}
 			  });
 		});
 });

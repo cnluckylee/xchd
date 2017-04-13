@@ -1,6 +1,6 @@
 <?php
 include_once('../../config.php'); //连接数据库 
-$action = $_GET['action']; 
+$action = @$_GET['action'];
 if($action==""){ //读取数据，返回json 
 		$sql1="select sum(`res`)  from `weixin_vote`;";
 		$query1=mysql_query($sql1,$link) or die(mysql_error());

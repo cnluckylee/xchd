@@ -5,6 +5,7 @@
 	var cj_retime = 0;
 	var cj_per= new Array(); 
 	var cjstart_btn = $(".startLotteryBtn");
+	var pid;
 		function cj_ready() {
 		cjstart_btn.children("span").text("正在准备数据…");
 		cjstart_btn='';
@@ -27,9 +28,11 @@
 				}
 					cjstart_btn = $(".startLotteryBtn");
 					cjstart_btn.children("span").text("开始抽奖");
-				});
+				pid=json.pid;
+			});
 
 		}
+	  cj_ready();
 	$(".btnLottery").click(function(){
 		
 		oopen=switchto(oopen,'cj_layer');
@@ -90,7 +93,7 @@
 				cjstart_btn.hide();
 				var cjcache_bin = cjstart_btn;
 				cjstart_btn ='';
-			  $.post("cj_plug/cj_data.php?action=ok",{id:cj_mid},function(msg){
+			  $.post("cj_plug/cj_data.php?action=ok",{id:cj_mid,pid:pid},function(msg){
 				  if(msg==1){
 							cj_jadge = 1;
 							cjcache_bin.children("span").text("开始抽奖");
