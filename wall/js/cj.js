@@ -34,10 +34,9 @@
 		}
 	  cj_ready();
 	$(".btnLottery").click(function(){
-		
 		oopen=switchto(oopen,'cj_layer');
 		cj_ready();
-		});
+	});
 	function cj_start(){
 		if(cj_retime == '0'){
 				cjstart_btn.hide();
@@ -55,7 +54,7 @@
 					var v = cj_per[num][2];
 					var avatar = cj_per[num][1];
 					$(".lotteryImg").attr("src",avatar);
-					$(".lotteryName").html(v);
+					$(".lotteryName").html(encodeURIComponent(v));
 					$("#cj_mid").val(cj_id);
 					$("#cj_mid").attr('name',num);
 				},200);
@@ -107,7 +106,7 @@
 						if(cj_retime > 1){
 							cj_retime = cj_retime-1;
 								recj();
-									}
+						}
 				  }
 			  });
 		}
