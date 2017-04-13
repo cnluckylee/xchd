@@ -53,13 +53,12 @@
 					//var id = obj[num]['id'];
 					var cj_id = cj_per[num][0];
 					var v = cj_per[num][2];
-                  	var avatar = cj_per[num][1];
-                  $(".lotteryImg").attr("src",avatar);
-                  $(".lotteryName").html(v);
-                    $("#cj_mid").val(cj_id); 
+					var avatar = cj_per[num][1];
+					$(".lotteryImg").attr("src",avatar);
+					$(".lotteryName").html(v);
+					$("#cj_mid").val(cj_id);
 					$("#cj_mid").attr('name',num);
-					
-				},100);
+				},1000);
 				cj_jadge = 0;
        			cjstart_btn.children("span").text("停止");
 				cjstart_btn.fadeIn(1000);

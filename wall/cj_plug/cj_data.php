@@ -5,7 +5,7 @@ include('../biaoqing.php');
 $action = $_GET['action'];
 $pid = isset($_GET['pid'])?$_GET['pid']:1374;
 include('../dbs.php');
-set_time_limit(100);
+set_time_limit(200);
 if($action=="reset"){
 	   $sqll = "update weixin_flag set status=2 where status=1"; 
        $queryy = mysql_query($sqll);
@@ -66,19 +66,43 @@ if($action=="reset"){
     $pageArray['data'] = $data;
     echo json_encode($pageArray);exit;
 }else if($action=="ok"){ //标识中奖号码 
-    $id = $_POST['id']; 
-    $sql = "update weixin_flag set status=1,cjstatu=0 where id=$id"; 
-    $query = mysql_query($sql); 
-	if($xuanzezu[10]){ 
-    $query2 = mysql_query("select * from weixin_flag where id = $id"); 
-	$row2=mysql_fetch_array($query2);
-	include("../../moni/cj.php");
-		$contant = '恭喜恭喜！您已中奖，请按照主持人的提示，到指定地点领取您的奖品！您的获奖验证码是：【'.$row2['fakeid'].'】';
-		sendmassage($token,$row2['fakeid'],$contant,$cookie,$cookies);
-	}
-    if($query){ 
-        echo '1'; 
-    } 
+    $id = $_POST['id'];
+    $pid = $_POST['pid'];
+    $myfile = fopen("/tmp/partyuser_".$pid.".txt", "w") or die("Unable to open file!");
+    $datas = json_decode($myfile,true);
+    if(isset($datas[$id]) && $datas[$id])
+    {
+        $v = $datas[$id];
+        $v['PID'] = $pid;
+        $v['cjstatu'] = 0;
+        $v['shady'] = 0;
+        $v['openid'] = '';
+        $v['status'] = 2;
+        $v['fakeid'] = 1;
+        $v['nickname'] = addslashes($v['nickname']);
+            try{
+                $db->add('weixin_flag',$v);
+            }catch(Exception $e)
+            {
+                print_r($e);exit;
+            }
+    }
+
+    fclose($myfile);
+    echo '1';exit;
+
+//    $sql = "update weixin_flag set status=1,cjstatu=0 where id=$id";
+//    $query = mysql_query($sql);
+//	if($xuanzezu[10]){
+//    $query2 = mysql_query("select * from weixin_flag where id = $id");
+//	$row2=mysql_fetch_array($query2);
+//	include("../../moni/cj.php");
+//		$contant = '恭喜恭喜！您已中奖，请按照主持人的提示，到指定地点领取您的奖品！您的获奖验证码是：【'.$row2['fakeid'].'】';
+//		sendmassage($token,$row2['fakeid'],$contant,$cookie,$cookies);
+//	}
+//    if($query){
+//        echo '1';
+//    }
 }else if($action == "reload")
 {
     $file = file_get_contents("http://sh.loco-app.com:8000//pcshare/partyusers?pid=".$pid);
