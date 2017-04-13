@@ -17,7 +17,6 @@
 			$.getJSON('cj_plug/cj_data.php?action=ready',function(json){
 			if(json){
 				 $.each(json.data, function(i,v){
-				 	console.log(v);
 				 	cj_per.push(new Array(v['id'],v['avatar'],v['nickname']));
 				});
 				   $(".lotteryUserNum").html(cj_per.length);
@@ -33,6 +32,7 @@
 
 		}
 	  cj_ready();
+	  oopen = 'cj_layer';
 	$(".btnLottery").click(function(){
 		oopen=switchto(oopen,'cj_layer');
 		cj_ready();
@@ -54,7 +54,7 @@
 					var v = cj_per[num][2];
 					var avatar = cj_per[num][1];
 					$(".lotteryImg").attr("src",avatar);
-					$(".lotteryName").html(encodeURIComponent(v));
+					$(".lotteryName").html(decodeURIComponent(v));
 					$("#cj_mid").val(cj_id);
 					$("#cj_mid").attr('name',num);
 				},200);
@@ -165,14 +165,15 @@
 			}
 	});
 $(document).keydown(function (event)
-    {    
+    {
            if (event.keyCode == 67) {
 				$('.btnLottery').click();
             }
 			if(oopen == 'cj_layer'){
 				if(event.keyCode == 32){
 					cjstart_btn.click();
-					}}
+					}
+			}
     });  
 	
 });

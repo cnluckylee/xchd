@@ -328,6 +328,7 @@ function viewstyle()
 }
 function messageAdd()
 {
+    return;
     if(cur==len)
     {
         messageData();
