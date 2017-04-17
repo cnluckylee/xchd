@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="cj_plug/images/cjcss.css" type="text/css">
-<div class="fl-lottery lotteryLayer ui transition " id="cj_layer">
+<div class="fl-lottery lotteryLayer ui transition hidden" id="cj_layer">
   <div class="fl-inner fl-bg">
     <div class="inner-cont clearfix">
       <div class="prize-box">
@@ -33,6 +33,7 @@
           <span class="rock-head"><img src="cj_plug/images/pair-default.jpg" class="lotteryImg" width="178" height="178" alt=""></span>
           <span class="rock-name lotteryName">... ...</span>
           <input type="hidden" id="cj_mid" value="">
+          <input type="hidden" id="cj_code" value="">
         </div>
 <div class="btn-clear clearfix">
         <div class="choose-num " id="lotteryNumBox">
