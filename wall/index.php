@@ -268,7 +268,7 @@ echo "if(event.keyCode == 89){
     });  
 
 });
-var refreshtime =<?php echo $xuanzezu[23] ?>;
+var refreshtime = 5;
 var len=4;
 var cur=0;//当前位置
 var mtime;

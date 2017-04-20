@@ -20,8 +20,8 @@
   </div>
 </div>
 <script>
-var votefresht=<?=$xuanzezu[17]?>;
-var voteshowway = <?=$xuanzezu[24]?>;
+var votefresht="<?=$xuanzezu[17]?>";
+var voteshowway = "<?=$xuanzezu[24]?>";
 </script>
 
 <script src="vote_plug/js/highcharts.js"></script>
